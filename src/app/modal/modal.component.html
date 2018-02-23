@@ -1,0 +1,13 @@
+<div class="modal" *ngIf="modalName">
+  <!--<div class="modal-"-->
+  <label class="modal-bg" (click)="closeModal()"></label>
+  <div class="modal-body">
+    <div class="modal-title">
+      <label class="btn-close" (click)="closeModal()">X</label>
+      <span>{{modalName}}</span>
+    </div>
+    <app-file-form *ngIf="modalName === modalNames.fileForm"></app-file-form>
+    <app-login *ngIf="modalName === modalNames.loginForm"></app-login>
+  </div>
+</div>
+

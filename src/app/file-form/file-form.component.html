@@ -1,0 +1,7 @@
+<div class="form-group">
+  <label for="file">File</label>
+  <input type="text" placeholder="File title"  required
+         [(ngModel)]="fileForm.name" name="name" id="fileName">
+  <input type="file" #fileInput id="file">
+  <button (click)="uploadFile(fileForm)">Upload</button>
+</div>
