@@ -3,5 +3,14 @@
   <input type="text" placeholder="File title"  required
          [(ngModel)]="fileForm.name" name="name" id="fileName">
   <input type="file" #fileInput id="file">
-  <button (click)="uploadFile(fileForm)">Upload</button>
+  <label for="file">Expires in</label>
+  <div class="expire-picker">
+    <input type="number" min="0" [(ngModel)]="fileForm.expireValue">
+    <select [(ngModel)]="fileForm.expireUnit">
+      <option value="d">Days</option>
+      <option value="w">Week</option>
+      <option value="m">Month</option>
+    </select>
+  </div>
+  <button (click)="uploadFile()">Upload</button>
 </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ModalService} from '../modal/modal.service';
 import {MODAL_NAME} from '../modal/modal-name';
 import {FileService} from '../file.service';
+import {FileModel} from '../file-list.model';
 
 @Component({
   selector: 'app-file-list',
@@ -10,7 +11,7 @@ import {FileService} from '../file.service';
 })
 export class FileListComponent implements OnInit {
 
-  files;
+  files: Array<FileModel> = [];
 
   constructor(private modalService: ModalService, private fileService: FileService) { }
 
@@ -22,5 +23,14 @@ export class FileListComponent implements OnInit {
 
   addFile() {
     this.modalService.openModal(MODAL_NAME.fileForm);
+  }
+
+  dlFile(file: FileModel) {
+    this.fileService.dlFile(file).then((data) => console.log(data));
+  }
+
+  removeDownloaded() {
+    let filesToDelete = this.files.filter((files) => files.used);
+    this.fileService.deleteFiles(filesToDelete);
   }
 }

@@ -1,7 +1,7 @@
 <header class="header paper">
   <div class="brand">File PaperCSS</div>
   <div class="menu">
-    <nav class="menu-bar">
+    <nav class="menu-bar" *ngIf="!loading">
       <a href="#" *ngIf="!user" (click)="login()" class="menu-item menu--active">Login</a>
       <span href="#" *ngIf="user">{{user.displayName}}</span>
       <a href="#" *ngIf="user" (click)="logout()">Logout</a>

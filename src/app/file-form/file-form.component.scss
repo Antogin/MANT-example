@@ -1,5 +1,9 @@
 .form-group{
-  input{
+  input, select{
     margin: 10px 0;
+  }
+  .expire-picker{
+    display: flex;
+    justify-content: space-between;
   }
 }

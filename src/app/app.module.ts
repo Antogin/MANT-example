@@ -17,6 +17,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import {AuthService} from './auth.service';
+import { FromNowPipe } from './from-now.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {AuthService} from './auth.service';
     FileFormComponent,
     LoginComponent,
     HeaderComponent,
+    FromNowPipe,
   ],
   imports: [
     BrowserModule,

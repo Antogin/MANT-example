@@ -1,9 +1,10 @@
-import {Time} from '@angular/common';
 
-export class FileListModel {
-  ref: string;
+export class FileModel {
   name: string;
   used: boolean;
-  expires: Time;
+  expires: string;
   userId: string;
+  key: string;
+  id: string;
+  link: string;
 }

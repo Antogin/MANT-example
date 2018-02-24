@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileService} from "../file.service";
+import {ModalService} from "../modal/modal.service";
 
 @Component({
   selector: 'app-file-form',
@@ -8,22 +9,28 @@ import {FileService} from "../file.service";
 })
 export class FileFormComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
-  fileForm: {name: string, file: File} = {name: '', file: null};
+  fileForm = {
+    name: '',
+    expireUnit: 'd',
+    expireValue: 14,
+    file: null
+  };
 
-  constructor(private fileService: FileService) { }
+  constructor(private fileService: FileService, private modalService: ModalService) { }
 
   ngOnInit() {
   }
 
-  uploadFile(fileForm: {name: string, file: File}) {
-    console.log(fileForm);
+  uploadFile() {
+    const name = this.fileForm.name;
     const file = this.fileInput.nativeElement.files[0];
-    console.log(this.fileInput.nativeElement);
+    const expireValue = this.fileForm.expireValue;
+    const expireUnit = this.fileForm.expireUnit;
+    console.log(expireValue, expireUnit);
 
-    this.fileService.uploadFile(file)
-      .subscribe((data) => {
-      this.fileService.saveFileRef(data);
-        console.log(data);
+    this.fileService.uploadFile(file, name, expireValue, expireUnit)
+      .subscribe(() => {
+        this.modalService.closeModal();
       });
   }
 }
