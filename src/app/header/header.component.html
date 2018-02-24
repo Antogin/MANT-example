@@ -1,10 +1,47 @@
-<header class="header paper">
-  <div class="brand">File PaperCSS</div>
-  <div class="menu">
-    <nav class="menu-bar" *ngIf="!loading">
-      <a href="#" *ngIf="!user" (click)="login()" class="menu-item menu--active">Login</a>
-      <span href="#" *ngIf="user">{{user.displayName}}</span>
-      <a href="#" *ngIf="user" (click)="logout()">Logout</a>
-    </nav>
+<!--<header class="header paper">-->
+  <!--<div class="brand">File PaperCSS</div>-->
+  <!--<div class="menu">-->
+    <!--<nav class="menu-bar" *ngIf="!loading">-->
+      <!--<a href="#" *ngIf="!user" (click)="login()" class="menu-item menu&#45;&#45;active">Login</a>-->
+      <!--<span href="#" *ngIf="user">{{user.displayName}}</span>-->
+      <!--<a href="#" *ngIf="user" (click)="logout()">Logout</a>-->
+    <!--</nav>-->
+  <!--</div>-->
+<!--</header>-->
+<nav class="navbar is-transparent">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+      <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    </a>
+    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-</header>
+
+  <div class="navbar-menu">
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control" *ngIf="!user" (click)="login()">
+            <a class="bd-tw-button button">
+              <span>
+                Login
+              </span>
+            </a>
+          </p>
+          <p class="control" *ngIf="user" (click)="logout()">
+            <a class="button is-primary">
+              <span>Logout</span>
+            </a>
+          </p>
+        </div>
+      </div>
+      <div class="navbar-item" *ngIf="user">
+        {{user.displayName}}
+      </div>
+    </div>
+  </div>
+</nav>

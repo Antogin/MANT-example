@@ -1,13 +1,28 @@
-<div class="modal" *ngIf="modalName">
-  <!--<div class="modal-"-->
-  <label class="modal-bg" (click)="closeModal()"></label>
-  <div class="modal-body">
-    <div class="modal-title">
-      <label class="btn-close" (click)="closeModal()">X</label>
-      <span>{{modalName}}</span>
-    </div>
-    <app-file-form *ngIf="modalName === modalNames.fileForm"></app-file-form>
-    <app-login *ngIf="modalName === modalNames.loginForm"></app-login>
+<!--<div class="modal" *ngIf="modalName">-->
+  <!--&lt;!&ndash;<div class="modal-"&ndash;&gt;-->
+  <!--<label class="modal-bg" (click)="closeModal()"></label>-->
+  <!--<div class="modal-body">-->
+    <!--<div class="modal-title">-->
+      <!--<label class="btn-close" (click)="closeModal()">X</label>-->
+      <!--<span>{{modalName}}</span>-->
+    <!--</div>-->
+    <!--<app-file-form *ngIf="modalName === modalNames.fileForm"></app-file-form>-->
+    <!--<app-login *ngIf="modalName === modalNames.loginForm"></app-login>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="modal is-active" *ngIf="modalName">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{modalName}}</p>
+      <button class="delete" (click)="closeModal()"></button>
+    </header>
+    <section class="modal-card-body">
+      <app-file-form *ngIf="modalName === modalNames.fileForm"></app-file-form>
+      <app-login *ngIf="modalName === modalNames.loginForm"></app-login>    </section>
+    <footer class="modal-card-foot">
+      <button class="button" (click)="closeModal()">Close</button>
+    </footer>
   </div>
 </div>
-

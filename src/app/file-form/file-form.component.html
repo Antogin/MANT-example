@@ -1,16 +1,54 @@
 <div class="form-group">
-  <label for="file">File</label>
-  <input type="text" placeholder="File title"  required
-         [(ngModel)]="fileForm.name" name="name" id="fileName">
-  <input type="file" #fileInput id="file">
-  <label for="file">Expires in</label>
-  <div class="expire-picker">
-    <input type="number" min="0" [(ngModel)]="fileForm.expireValue">
-    <select [(ngModel)]="fileForm.expireUnit">
+  <div class="field">
+    <label class="label">File</label>
+    <div class="control">
+      <input type="text" class="input" placeholder="File title" required
+             [(ngModel)]="fileForm.name" name="name" id="fileName">
+    </div>
+  </div>
+  <div class="field">
+    <div class="file has-name is-boxed">
+      <label class="file-label">
+        <input class="file-input" (change)="fileChange($event)" #fileInput type="file" name="resume">
+        <span class="file-cta">
+        <span class="file-icon">
+          <i class="fas fa-upload"></i>
+        </span>
+        <span class="file-label">
+          Choose a file…
+        </span>
+    </span>
+        <span class="file-name">
+    </span>
+      </label>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Expires in</label>
+
+    <!--<div class="expire-picker">-->
+    <!--<input type="number" min="0" [(ngModel)]="fileForm.expireValue">-->
+    <!--<select [(ngModel)]="fileForm.expireUnit">-->
+    <!--<option value="d">Days</option>-->
+    <!--<option value="w">Week</option>-->
+    <!--<option value="m">Month</option>-->
+    <!--</select>-->
+    <!--</div>-->
+
+    <div class="field has-addons">
+      <p class="control">
+    <span class="select">
+       <select [(ngModel)]="fileForm.expireUnit">
       <option value="d">Days</option>
       <option value="w">Week</option>
       <option value="m">Month</option>
     </select>
+    </span>
+      </p>
+      <p class="control">
+        <input class="input" type="number" min="0" [(ngModel)]="fileForm.expireValue">
+      </p>
+    </div>
   </div>
-  <button (click)="uploadFile()">Upload</button>
+  <button class="button" (click)="uploadFile()">Upload</button>
 </div>

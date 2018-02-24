@@ -1,11 +1,40 @@
-<div class="card notification">
-  <div class="card-header">
-    <i class="fa fa-bell-o" aria-hidden="true"></i>
-    Files
-  </div>
-  <div class="card-body">
-    <ul>
-      <li class="background-success" *ngFor="let file of files">
+<!--<div class="card notification">-->
+<!--<div class="card-header">-->
+<!--<i class="fa fa-bell-o" aria-hidden="true"></i>-->
+<!--Files-->
+<!--</div>-->
+<!--<div class="card-body">-->
+<!--<ul>-->
+<!--<li class="background-success" *ngFor="let file of files">-->
+<!--<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>-->
+<!--<span>{{file.name ? file.name : file.key}}</span>-->
+<!--<span *ngIf="!file.used">, Expires {{file.expires | fromNow : ''}}</span>-->
+<!--<div>-->
+<!--<a *ngIf="!file.used" [href]="file.link" target="_blank" (click)="dlFile(file)">Download</a>-->
+<!--<span *ngIf="file.used">Already Downloaded</span>-->
+<!--</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="card-footer">-->
+<!--<a class="card-link" href="#" (click)="addFile()">Add file</a>-->
+<!--<a class="card-link" href="#" (click)="removeDownloaded()">Delete downloaded files</a>-->
+<!--</div>-->
+<!--</div>-->
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Files
+    </p>
+    <a href="#" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </a>
+  </header>
+  <div class="card-content">
+    <div class="content">
+      <div class="box" *ngFor="let file of files">
         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
         <span>{{file.name ? file.name : file.key}}</span>
         <span *ngIf="!file.used">, Expires {{file.expires | fromNow : ''}}</span>
@@ -13,11 +42,11 @@
           <a *ngIf="!file.used" [href]="file.link" target="_blank" (click)="dlFile(file)">Download</a>
           <span *ngIf="file.used">Already Downloaded</span>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
-  <div class="card-footer">
-    <a class="card-link" href="#" (click)="addFile()">Add file</a>
-    <a class="card-link" href="#" (click)="removeDownloaded()">Delete downloaded files</a>
-  </div>
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item" (click)="addFile()">Add file</a>
+    <a href="#" class="card-footer-item" (click)="removeDownloaded()">Clean up</a>
+  </footer>
 </div>

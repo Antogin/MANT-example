@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FileService} from "../file.service";
-import {ModalService} from "../modal/modal.service";
+import {FileService} from '../file.service';
+import {ModalService} from '../modal/modal.service';
 
 @Component({
   selector: 'app-file-form',
