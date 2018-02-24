@@ -7,4 +7,5 @@ export class FileModel {
   key: string;
   id: string;
   link: string;
+  dlTime: string;
 }

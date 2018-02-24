@@ -76,6 +76,7 @@ export class FileService {
 
   dlFile (file: FileModel) {
     file.used = true;
+    file.dlTime =  moment().format('X');
     return this.db.collection('files').doc(file.id).set(file);
   }
 

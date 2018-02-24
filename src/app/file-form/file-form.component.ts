@@ -16,12 +16,22 @@ export class FileFormComponent implements OnInit {
     file: null
   };
 
-  constructor(private fileService: FileService, private modalService: ModalService) { }
+  file: File = null;
 
-  ngOnInit() {
+  constructor (private fileService: FileService, private modalService: ModalService) {
   }
 
-  uploadFile() {
+  ngOnInit () {
+  }
+
+  fileChange (e: any) {
+    let fileList: FileList = e.target.files;
+    if (fileList.length) {
+      this.file = fileList[0];
+    }
+  }
+
+  uploadFile () {
     const name = this.fileForm.name;
     const file = this.fileInput.nativeElement.files[0];
     const expireValue = this.fileForm.expireValue;

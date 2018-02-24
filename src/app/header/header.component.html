@@ -26,7 +26,7 @@
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control" *ngIf="!user" (click)="login()">
-            <a class="bd-tw-button button">
+            <a class="bd-tw-button button" [ngClass]="{'is-loading': loading}">
               <span>
                 Login
               </span>

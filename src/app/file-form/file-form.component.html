@@ -12,13 +12,14 @@
         <input class="file-input" (change)="fileChange($event)" #fileInput type="file" name="resume">
         <span class="file-cta">
         <span class="file-icon">
-          <i class="fas fa-upload"></i>
+          <i class="fas fa-upload" *ngIf="file"></i>
         </span>
-        <span class="file-label">
+        <span class="file-label" *ngIf="!file">
           Choose a file…
         </span>
     </span>
-        <span class="file-name">
+        <span class="file-name" *ngIf="file">
+          {{file.name}}
     </span>
       </label>
     </div>
