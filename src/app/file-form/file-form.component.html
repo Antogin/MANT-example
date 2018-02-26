@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group" *ngIf="!uploadPercentage">
   <div class="field">
     <label class="label">File</label>
     <div class="control">
@@ -53,3 +53,19 @@
   </div>
   <button class="button" (click)="uploadFile()">Upload</button>
 </div>
+<div class="box" *ngIf="uploadPercentage" >
+  <progress [ngClass]="{'is-success': uploadPercentage === 100}"
+            class="progress" [value]="uploadPercentage" max="100">{{uploadPercentage}}%</progress>
+  <div class="field has-addons" *ngIf="dlLink">
+    <div class="control dl-link-control">
+      <input class="input" #dlLinkInput type="text" [value]="dlLink">
+    </div>
+    <div class="control">
+      <a class="button is-info" (click)="copyLink(dlLink)">
+        Copy
+      </a>
+    </div>
+  </div>
+</div>
+
+

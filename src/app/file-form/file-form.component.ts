@@ -1,6 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FileService} from '../file.service';
 import {ModalService} from '../modal/modal.service';
+import {last} from 'rxjs/operators';
+import {nextTick} from "q";
 
 @Component({
   selector: 'app-file-form',
@@ -8,7 +10,8 @@ import {ModalService} from '../modal/modal.service';
   styleUrls: ['./file-form.component.scss']
 })
 export class FileFormComponent implements OnInit {
-  @ViewChild('fileInput') fileInput;
+  @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('dlLinkInput') dlLinkInput: ElementRef;
   fileForm = {
     name: '',
     expireUnit: 'd',
@@ -17,6 +20,8 @@ export class FileFormComponent implements OnInit {
   };
 
   file: File = null;
+  uploadPercentage = 0;
+  dlLink: string = null;
 
   constructor (private fileService: FileService, private modalService: ModalService) {
   }
@@ -24,11 +29,16 @@ export class FileFormComponent implements OnInit {
   ngOnInit () {
   }
 
-  fileChange (e: any) {
+  fileChange (e) {
     let fileList: FileList = e.target.files;
     if (fileList.length) {
       this.file = fileList[0];
     }
+  }
+
+  copyLink() {
+    this.dlLinkInput.nativeElement.select();
+    document.execCommand('copy');
   }
 
   uploadFile () {
@@ -36,11 +46,26 @@ export class FileFormComponent implements OnInit {
     const file = this.fileInput.nativeElement.files[0];
     const expireValue = this.fileForm.expireValue;
     const expireUnit = this.fileForm.expireUnit;
-    console.log(expireValue, expireUnit);
+    const upload = this.fileService.uploadFile(file, name, expireValue, expireUnit);
 
-    this.fileService.uploadFile(file, name, expireValue, expireUnit)
-      .subscribe(() => {
-        this.modalService.closeModal();
+    upload.filter((event) => event.type === 1)
+      .subscribe((val: any) => {
+        let percentage = (val.loaded / val.total) * 100;
+        console.log(percentage);
+        this.uploadPercentage = percentage;
+        // this.modalService.closeModal();
       });
+    upload.pipe(last())
+      .subscribe(
+        (lastVal: any) => {
+          const link = 'http://localhost:3000/dl/' + lastVal.body.key;
+          this.dlLink = link;
+          setTimeout(() => {
+            this.dlLinkInput.nativeElement.select();
+          }, 0);
+        }
+      );
+
+    this.uploadPercentage = 1;
   }
 }

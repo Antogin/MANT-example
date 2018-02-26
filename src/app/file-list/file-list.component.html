@@ -26,9 +26,12 @@
     <p class="card-header-title">
       Files
     </p>
+    <a  class="card-header-icon">
+      <span (click)="removeDownloaded()">Clean up</span>
+    </a>
     <a href="#" class="card-header-icon" aria-label="more options">
       <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
+        <i class="fas fa-plus" aria-hidden="true" (click)="addFile()"></i>
       </span>
     </a>
   </header>
@@ -38,14 +41,11 @@
         <span>{{file.name ? file.name : file.key}}</span>
         <span *ngIf="!file.used">, Expires {{file.expires | fromNow}}</span>
         <div>
-          <a *ngIf="!file.used" [href]="file.link" target="_blank" (click)="dlFile(file)">Download</a>
+          <span>Link: </span>
+          <a *ngIf="!file.used" [href]="file.link | sanitizer" target="_blank" (click)="dlFile(file)">{{file.link}}</a>
           <span *ngIf="file.used">Downloaded {{file.dlTime | fromNow}}</span>
         </div>
       </div>
     </div>
   </div>
-  <footer class="card-footer">
-    <a href="#" class="card-footer-item" (click)="addFile()">Add file</a>
-    <a href="#" class="card-footer-item" (click)="removeDownloaded()">Clean up</a>
-  </footer>
 </div>

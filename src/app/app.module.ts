@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import {AuthService} from './auth.service';
 import { FromNowPipe } from './from-now.pipe';
+import { SanitizerPipe } from './sanitizer.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FromNowPipe } from './from-now.pipe';
     LoginComponent,
     HeaderComponent,
     FromNowPipe,
+    SanitizerPipe,
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,7 @@ export class FileListComponent implements OnInit {
   }
 
   dlFile(file: FileModel) {
-    this.fileService.dlFile(file).then((data) => console.log(data));
+    // this.fileService.dlFile(file).then((data) => console.log(data));
   }
 
   removeDownloaded() {

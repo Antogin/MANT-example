@@ -1,5 +1,9 @@
-<app-header></app-header>
-<div class="paper" *ngIf="user">
-  <app-file-list></app-file-list>
+<div class="app-container">
+  <app-header></app-header>
+  <div class="paper" *ngIf="user">
+    <section class="section">
+      <app-file-list></app-file-list>
+    </section>
+  </div>
+  <app-modal></app-modal>
 </div>
-<app-modal></app-modal>

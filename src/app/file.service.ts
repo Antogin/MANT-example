@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {Subject} from 'rxjs/Subject';
 import {AuthService} from './auth.service';
 import {FileModel} from './file-list.model';
 import * as moment from 'moment';
+import {last} from "rxjs/operators";
 
 const UNIT_FULL_NAME = {
   'd': 'days',
@@ -63,20 +64,41 @@ export class FileService {
     let params = new HttpParams().set('expires', expires);
     let expiresTimeStamp = moment().add(UNIT_FULL_NAME[expireUnit], expireValue).format('X');
 
-    return this.http.post(`https://file.io`, formData, {params})
-      .map((item: FileModel) => {
-        console.log(item);
-        item.userId = userId;
-        item.name = name;
-        item.used = false;
-        item.expires = expiresTimeStamp;
-        return ref.add(item);
-      });
+    const req = new HttpRequest('POST', `https://file.io`, formData, {
+      params,
+      reportProgress: true,
+    });
+
+    const upload = this.http.request(req).share();
+
+    upload.pipe(last())
+      .subscribe(
+        (lastVal: any) => {
+          let item = lastVal.body;
+          item.userId = userId;
+          item.name = name;
+          item.used = false;
+          item.link = 'http://localhost:3000/dl/' + item.key;
+          item.expires = expiresTimeStamp;
+          return ref.add(item);
+        }
+      );
+
+    return upload;
+    // return this.http.post(`https://file.io`, formData, {params})
+    //   .map((item: FileModel) => {
+    //     // console.log(item);
+    //     item.userId = userId;
+    //     item.name = name;
+    //     item.used = false;
+    //     item.expires = expiresTimeStamp;
+    //     return ref.add(item);
+    //   });
   }
 
   dlFile (file: FileModel) {
     file.used = true;
-    file.dlTime =  moment().format('X');
+    file.dlTime = moment().format('X');
     return this.db.collection('files').doc(file.id).set(file);
   }
 
