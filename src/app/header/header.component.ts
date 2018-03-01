@@ -4,6 +4,7 @@ import {ModalService} from '../modal/modal.service';
 import {MODAL_NAME} from '../modal/modal-name';
 import {Subscription} from 'rxjs/Subscription';
 import {first} from 'rxjs/operators';
+import {FileService} from "../file.service";
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   $user: Subscription = null;
   loading = true;
 
-  constructor (public authService: AuthService, private modalService: ModalService) {
+  constructor (public authService: AuthService, private modalService: ModalService, private fileService: FileService) {
   }
 
   ngOnInit () {
@@ -26,9 +27,12 @@ export class HeaderComponent implements OnInit {
   subscribeToAuthService () {
     this.$user = this.authService.user
       .subscribe((user) => {
-      console.log(user);
-      this.user = user;
-    });
+        console.log('ga =>', user);
+        if (!user) {
+          this.authService.anonymousLogin();
+        }
+        this.user = user;
+      });
     this.authService.user.pipe(first(() => this.loading = false)).subscribe();
   }
 
@@ -41,6 +45,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout () {
-    this.authService.logout();
+    this.authService.logout().then(() => {
+      this.fileService.resetFile();
+    });
   }
 }

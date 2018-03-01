@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
-import {Subject} from 'rxjs/Subject';
 import {AuthService} from './auth.service';
 import {FileModel} from './file-list.model';
 import * as moment from 'moment';
-import {last} from "rxjs/operators";
+import {last} from 'rxjs/operators';
+import {environment} from '../environments/environment';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const UNIT_FULL_NAME = {
   'd': 'days',
@@ -16,7 +17,7 @@ const UNIT_FULL_NAME = {
 @Injectable()
 export class FileService {
 
-  $files: Subject<any> = new Subject();
+  $files: BehaviorSubject<any> = new BehaviorSubject(null);
   ref: AngularFirestoreCollection<any>;
   user: any = null;
 
@@ -46,11 +47,11 @@ export class FileService {
           item.id = snap.payload.doc.id;
           return item;
         });
-        console.log(items);
+        // console.log(items);
         return items;
       })
       .subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         this.$files.next(data);
       });
   }
@@ -78,7 +79,7 @@ export class FileService {
           item.userId = userId;
           item.name = name;
           item.used = false;
-          item.link = 'http://localhost:3000/dl/' + item.key;
+          item.link = `${environment.domain}dl/${item.key}`;
           item.expires = expiresTimeStamp;
           return ref.add(item);
         }
@@ -94,6 +95,20 @@ export class FileService {
     //     item.expires = expiresTimeStamp;
     //     return ref.add(item);
     //   });
+  }
+
+  addFiles (files: FileModel[], user) {
+    console.log(files);
+    console.log(user);
+    let ref = this.db.collection('files');
+    files.forEach((file) => {
+      file.userId = user.uid;
+      ref.add(file);
+    });
+  }
+
+  resetFile () {
+    this.$files.next([]);
   }
 
   dlFile (file: FileModel) {

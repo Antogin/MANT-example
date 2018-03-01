@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {ModalService} from "../modal/modal.service";
+import {FileService} from "../file.service";
 
 @Component({
   selector: 'app-login',
@@ -9,22 +10,24 @@ import {ModalService} from "../modal/modal.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor (private authService: AuthService, private modalService: ModalService) {
+  constructor (private authService: AuthService, private modalService: ModalService, private fileService: FileService) {
   }
 
-  ngOnInit () {
-  }
+  ngOnInit () {}
 
   authGoogle () {
+    let fileToAdd = this.fileService.$files.getValue();
+
     this.authService.googleLogin()
-      .then(() => {
+      .then((user) => {
+        this.fileService.addFiles(fileToAdd, user);
         this.modalService.closeModal();
       });
   }
 
-  authGithub () {
+  sneak () {
     console.log('authGithub');
-    this.authService.githubLogin();
+    this.authService.anonymousLogin();
   }
 
 }

@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FileService} from '../file.service';
 import {ModalService} from '../modal/modal.service';
 import {last} from 'rxjs/operators';
-import {nextTick} from "q";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-file-form',
@@ -55,10 +55,11 @@ export class FileFormComponent implements OnInit {
         this.uploadPercentage = percentage;
         // this.modalService.closeModal();
       });
+
     upload.pipe(last())
       .subscribe(
         (lastVal: any) => {
-          const link = 'http://localhost:3000/dl/' + lastVal.body.key;
+          const link = `${environment.domain}dl/${lastVal.body.key}`;
           this.dlLink = link;
           setTimeout(() => {
             this.dlLinkInput.nativeElement.select();
