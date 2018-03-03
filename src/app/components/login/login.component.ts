@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../auth.service';
-import {ModalService} from "../modal/modal.service";
-import {FileService} from "../file.service";
+import {AuthService} from '../../services/auth.service';
+import {ModalService} from '../../shared/modal/modal.service';
+import {FileService} from '../../services/file.service';
 
 @Component({
   selector: 'app-login',

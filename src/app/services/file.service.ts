@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {AuthService} from './auth.service';
-import {FileModel} from './file-list.model';
+import {FileModel} from '../models/file-list.model';
 import * as moment from 'moment';
 import {last} from 'rxjs/operators';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const UNIT_FULL_NAME = {

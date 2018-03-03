@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ModalService} from '../modal/modal.service';
-import {MODAL_NAME} from '../modal/modal-name';
-import {FileService} from '../file.service';
-import {FileModel} from '../file-list.model';
+import {Component, OnInit} from '@angular/core';
+import {ModalService} from '../../shared/modal/modal.service';
+import {MODAL_NAME} from '../../shared/modal/modal-name';
+import {FileService} from '../../services/file.service';
+import {FileModel} from '../../models/file-list.model';
 
 @Component({
   selector: 'app-file-list',
