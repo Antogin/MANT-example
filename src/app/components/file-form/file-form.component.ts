@@ -53,7 +53,6 @@ export class FileFormComponent implements OnInit {
         let percentage = (val.loaded / val.total) * 100;
         console.log(percentage);
         this.uploadPercentage = percentage;
-        // this.modalService.closeModal();
       });
 
     upload.pipe(last())

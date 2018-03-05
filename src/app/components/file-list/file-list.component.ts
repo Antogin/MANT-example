@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalService} from '../../shared/modal/modal.service';
 import {MODAL_NAME} from '../../shared/modal/modal-name';
 import {FileService} from '../../services/file.service';
-import {FileModel} from '../../models/file-list.model';
+import {FileModel} from '../../models/file.model';
 
 @Component({
   selector: 'app-file-list',
