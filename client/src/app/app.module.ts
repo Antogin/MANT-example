@@ -19,7 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
 import {AuthService} from './services/auth.service';
 import { FromNowPipe } from './pipes/from-now.pipe';
 import { SanitizerPipe } from './pipes/sanitizer.pipe';
-import {SocketService} from "./services/socket.service";
+import {SocketService} from './services/socket.service';
 
 @NgModule({
   declarations: [

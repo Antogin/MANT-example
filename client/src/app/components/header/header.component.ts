@@ -4,7 +4,7 @@ import {ModalService} from '../../shared/modal/modal.service';
 import {MODAL_NAME} from '../../shared/modal/modal-name';
 import {Subscription} from 'rxjs/Subscription';
 import {first} from 'rxjs/operators';
-import {FileService} from "../../services/file.service";
+import {FileService} from '../../services/file.service';
 
 @Component({
   selector: 'app-header',
