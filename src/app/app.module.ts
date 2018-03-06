@@ -19,6 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
 import {AuthService} from './services/auth.service';
 import { FromNowPipe } from './pipes/from-now.pipe';
 import { SanitizerPipe } from './pipes/sanitizer.pipe';
+import {SocketService} from "./services/socket.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { SanitizerPipe } from './pipes/sanitizer.pipe';
     AngularFireModule.initializeApp(environment.fireBaseConfig),
     AngularFirestoreModule
   ],
-  providers: [ModalService, FileService, HttpClientModule, AuthService],
+  providers: [ModalService, FileService, HttpClientModule, AuthService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

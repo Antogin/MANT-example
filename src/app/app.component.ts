@@ -10,9 +10,10 @@ export class AppComponent {
   title = 'app';
   user: any = null;
 
-  constructor(private authService: AuthService){
+  constructor(private authService: AuthService) {
     this.authService.user.subscribe((user) => {
       this.user = user;
     });
+
   }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firestore';
 import {AuthService} from './auth.service';
 import {FileModel} from '../models/file.model';
@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {last} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {UserModel} from '../models/user.model';
 
 const UNIT_FULL_NAME = {
   'd': 'days',
@@ -17,9 +18,9 @@ const UNIT_FULL_NAME = {
 @Injectable()
 export class FileService {
 
-  $files: BehaviorSubject<any> = new BehaviorSubject(null);
+  $files: BehaviorSubject<Array<FileModel>> = new BehaviorSubject(null);
   ref: AngularFirestoreCollection<any>;
-  user: any = null;
+  user: UserModel = null;
 
   constructor (private http: HttpClient, private db: AngularFirestore, private authService: AuthService) {
     this.subscribeToAuthService();
@@ -29,41 +30,27 @@ export class FileService {
     this.authService.user.subscribe((user) => {
       this.user = user;
       if (user) {
-        this.subscribeToFileList();
+        this.getToFileList();
       }
     });
   }
 
-  subscribeToFileList () {
-    this.ref = this.db.collection('files', ref => {
-      let userId = this.user.uid;
-      return ref.where('userId', '==', userId).orderBy('expires');
-    });
+  getToFileList () {
+    const userId = this.user.uid;
+    const headers = new HttpHeaders().append('userId', userId);
 
-    this.ref.snapshotChanges()
-      .map(snaps => {
-        let items = snaps.map(snap => {
-          let item = snap.payload.doc.data();
-          item.id = snap.payload.doc.id;
-          return item;
-        });
-        // console.log(items);
-        return items;
-      })
-      .subscribe((data) => {
-        // console.log(data);
-        this.$files.next(data);
-      });
+    this.http.get('http://localhost:3000/file', {headers}).subscribe((data: FileModel[]) => {
+      this.$files.next(data);
+    });
   }
 
   uploadFile (file: File, name: string, expireValue: number, expireUnit: string) {
-    let userId = this.user ? this.user.uid : null;
+    const userId = this.user ? this.user.uid : null;
     let formData: FormData = new FormData();
     const expires = expireValue + expireUnit;
     formData.append('file', file, file.name);
-    let ref = this.db.collection('files');
-    let params = new HttpParams().set('expires', expires);
-    let expiresTimeStamp = moment().add(UNIT_FULL_NAME[expireUnit], expireValue).format('X');
+    const params = new HttpParams().set('expires', expires);
+    const expiresTimeStamp = moment().add(UNIT_FULL_NAME[expireUnit], expireValue).format('X');
 
     const req = new HttpRequest('POST', `https://file.io`, formData, {
       params,
@@ -77,11 +64,14 @@ export class FileService {
         (lastVal: any) => {
           let item = lastVal.body;
           item.userId = userId;
-          item.name = name;
+          item.name = name ? name : item.key;
           item.used = false;
-          item.link = `${environment.domain}dl/${item.key}`;
+          item.link = `${environment.domain}file/${item.key}`;
           item.expires = expiresTimeStamp;
-          return ref.add(item);
+          return this.http.post('http://localhost:3000/file/', item).subscribe((data) => {
+            console.log('add file', data);
+          });
+          // return ref.add(item);
         }
       );
 
@@ -107,6 +97,40 @@ export class FileService {
     });
   }
 
+  fileAdded (file: FileModel) {
+    let value = this.$files.getValue();
+    value.push(file);
+    this.$files.next(value);
+  }
+
+  fileChanged (file: FileModel) {
+    const files = this.$files.getValue().map((item) => {
+      if (item._id === file._id) {
+        item = file;
+      }
+      return item;
+    });
+
+    this.$files.next(files);
+  }
+
+  filesDeleted (ids: string[]) {
+    const files = this.$files.getValue();
+    console.log(files);
+
+
+    const newFiles = files.filter((file) => {
+      console.log(file);
+      return ids.every((id) => {
+        return id !== file._id;
+      });
+    });
+
+    console.log(newFiles);
+
+    this.$files.next(newFiles);
+  }
+
   resetFile () {
     this.$files.next([]);
   }
@@ -114,14 +138,22 @@ export class FileService {
   dlFile (file: FileModel) {
     file.used = true;
     file.dlTime = moment().format('X');
-    return this.db.collection('files').doc(file.id).set(file);
+    return this.db.collection('files').doc(file._id).set(file);
   }
 
-  deleteFiles (files: Array<FileModel>) {
-    console.log('delete', files);
-    files.forEach((file) => {
-      this.db.collection('files').doc(file.id).delete();
-    });
+  deleteFiles (ids: string[]) {
+    const userId = this.user.uid;
+    const headers = new HttpHeaders().append('userId', userId);
+    const options = {
+      body: ids,
+      headers
+    };
+
+    console.log('delete', ids);
+    return this.http.delete(environment.domain + 'file/', options);
+    // files.forEach((file) => {
+    //   this.db.collection('files').doc(file._id).delete();
+    // });
   }
 
 }

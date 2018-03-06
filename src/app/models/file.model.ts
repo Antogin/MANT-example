@@ -5,7 +5,7 @@ export class FileModel {
   expires: string;
   userId: string;
   key: string;
-  id: string;
+  _id: string;
   link: string;
   dlTime: string;
 }

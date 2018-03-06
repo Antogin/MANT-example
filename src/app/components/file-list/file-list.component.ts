@@ -3,6 +3,7 @@ import {ModalService} from '../../shared/modal/modal.service';
 import {MODAL_NAME} from '../../shared/modal/modal-name';
 import {FileService} from '../../services/file.service';
 import {FileModel} from '../../models/file.model';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
   selector: 'app-file-list',
@@ -13,24 +14,26 @@ export class FileListComponent implements OnInit {
 
   files: Array<FileModel> = [];
 
-  constructor(private modalService: ModalService, private fileService: FileService) { }
+  constructor (private modalService: ModalService, private fileService: FileService, private socketService: SocketService) {
+  }
 
-  ngOnInit() {
+  ngOnInit () {
     this.fileService.$files.subscribe((data) => {
+      console.log(data);
       this.files = data;
     });
   }
 
-  addFile() {
+  addFile () {
     this.modalService.openModal(MODAL_NAME.fileForm);
   }
 
-  dlFile(file: FileModel) {
+  dlFile (file: FileModel) {
     // this.fileService.dlFile(file).then((data) => console.log(data));
   }
 
-  removeDownloaded() {
-    let filesToDelete = this.files.filter((files) => files.used);
-    this.fileService.deleteFiles(filesToDelete);
+  removeDownloaded () {
+    let filesToDelete = this.files.filter((files) => files.used).map((file) => file._id);
+    this.fileService.deleteFiles(filesToDelete).subscribe(() => {});
   }
 }
