@@ -88,8 +88,6 @@ export class FileService {
   }
 
   addFiles (files: FileModel[], user) {
-    console.log(files);
-    console.log(user);
     let ref = this.db.collection('files');
     files.forEach((file) => {
       file.userId = user.uid;
@@ -116,18 +114,12 @@ export class FileService {
 
   filesDeleted (ids: string[]) {
     const files = this.$files.getValue();
-    console.log(files);
-
 
     const newFiles = files.filter((file) => {
-      console.log(file);
       return ids.every((id) => {
         return id !== file._id;
       });
     });
-
-    console.log(newFiles);
-
     this.$files.next(newFiles);
   }
 
@@ -148,8 +140,6 @@ export class FileService {
       body: ids,
       headers
     };
-
-    console.log('delete', ids);
     return this.http.delete(environment.domain + 'file/', options);
     // files.forEach((file) => {
     //   this.db.collection('files').doc(file._id).delete();

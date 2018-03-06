@@ -29,7 +29,6 @@ export class FileController {
 
     res.redirect(url);
     this.fileService.markFileAsUsed(id, update).then((doc) => {
-      console.log(doc);
       this.ws.fileUsed(doc);
     });
   }
@@ -45,8 +44,6 @@ export class FileController {
   @Delete()
   deleteFiles (@Res() res, @Body() fileIds: string[], @Headers() headers) {
     const userId = headers.userid;
-
-    console.log(fileIds);
 
     this.fileService.deleteFiles(fileIds).then(() => {
       this.ws.filesDeleted(fileIds, userId);

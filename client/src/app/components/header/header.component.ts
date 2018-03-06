@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
   subscribeToAuthService () {
     this.$user = this.authService.user
       .subscribe((user) => {
-        console.log('ga =>', user);
         if (!user) {
           this.authService.anonymousLogin();
         }

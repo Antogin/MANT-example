@@ -62,7 +62,6 @@ export class WebsocketService {
   }
 
   filesDeleted (ids: string[], userId: string) {
-    console.log(userId);
     const userConnections = this.users[userId];
 
     if (userConnections) {

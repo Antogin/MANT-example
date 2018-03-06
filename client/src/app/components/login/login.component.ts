@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
   }
 
   sneak () {
-    console.log('authGithub');
     this.authService.anonymousLogin();
   }
 

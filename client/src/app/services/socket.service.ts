@@ -11,22 +11,16 @@ export class SocketService {
   user: UserModel;
 
   constructor (private authService: AuthService, private fileService: FileService) {
-    console.log('SocketService');
     authService.user.subscribe((user) => {
       if (user) {
         this.updateConnection(user);
       }
     });
 
-    console.log('socket');
     this.socket = io('http://localhost:81/');
 
     this.socket.once('connect', () => {
       console.log('connected');
-    });
-
-    this.socket.on('hello', (data) => {
-      console.log('ws', data);
     });
 
     this.socket.on('file added', (data) => {

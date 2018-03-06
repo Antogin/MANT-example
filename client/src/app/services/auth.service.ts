@@ -33,9 +33,7 @@ export class AuthService {
   }
 
   public anonymousLogin() {
-    console.log('anon');
     this.afAuth.auth.signInAnonymously().then((cred) => {
-      console.log(cred);
       this.updateUserData(cred, true);
     });
   }
@@ -43,7 +41,6 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((cred) => {
-      console.log(cred);
         this.updateUserData(cred.user);
         return cred.user;
       });
