@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/server/ts-node-bd45f2039f225078dd0ceea4ff96d78999ea10f96d898ee7ea63507faaee6173/
+!/server/ts-node-bd45f2039f225078dd0ceea4ff96d78999ea10f96d898ee7ea63507faaee6173/
+server/ts-node-bd45f2039f225078dd0ceea4ff96d78999ea10f96d898ee7ea63507faaee6173/

@@ -66,7 +66,7 @@ export class FileService {
           item.userId = userId;
           item.name = name ? name : item.key;
           item.used = false;
-          item.link = `${environment.domain}file/${item.key}`;
+          item.link = `${environment.domain}dl/${item.key}`;
           item.expires = expiresTimeStamp;
           return this.http.post('http://localhost:3000/file/', item).subscribe((data) => {
             console.log('add file', data);

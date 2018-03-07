@@ -7,7 +7,7 @@ import Server = SocketIO.Server;
 import Socket = SocketIO.Socket;
 import {WebsocketService} from '../websocket.service';
 
-@WebSocketGateway(81)
+@WebSocketGateway(4201)
 export class FileGateway implements NestGateway {
   @WebSocketServer() server: Server;
 

@@ -17,7 +17,7 @@ export class SocketService {
       }
     });
 
-    this.socket = io('http://localhost:81/');
+    this.socket = io('http://localhost:4201/');
 
     this.socket.once('connect', () => {
       console.log('connected');

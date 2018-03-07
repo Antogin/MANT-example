@@ -1,8 +1,8 @@
-import {Get, Controller, Res, Post, Req, Body, Param, Headers, Delete} from '@nestjs/common';
+import {Get, Controller, Res, Post, Body, Param, Headers, Delete} from '@nestjs/common';
 import {FileService} from './file.service';
 import {AddFileDTO} from './file.models';
 import {WebsocketService} from '../websocket.service';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Controller('file')
 export class FileController {
