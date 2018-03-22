@@ -16,10 +16,15 @@
               <span>Logout</span>
             </a>
           </p>
-          <p class="control" *ngIf="user && user.anonymous" (click)="login()">
-            <a class="bd-tw-button button" [ngClass]="{'is-loading': loading}">
+          <p class="control" *ngIf="user && user.anonymous">
+            <a class="bd-tw-button button" [ngClass]="{'is-loading': loading}"  (click)="login()">
               <span>
                 Login
+              </span>
+            </a>
+            <a class="bd-tw-button button" [ngClass]="{'is-loading': loading}"  (click)="signUp()">
+              <span>
+                Sign up
               </span>
             </a>
           </p>

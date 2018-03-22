@@ -11,9 +11,9 @@ export class AppComponent {
   user: any = null;
 
   constructor(private authService: AuthService) {
+    this.authService.init();
     this.authService.user.subscribe((user) => {
       this.user = user;
     });
-
   }
 }

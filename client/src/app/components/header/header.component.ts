@@ -27,9 +27,9 @@ export class HeaderComponent implements OnInit {
   subscribeToAuthService () {
     this.$user = this.authService.user
       .subscribe((user) => {
-        if (!user) {
-          this.authService.anonymousLogin();
-        }
+        // if (!user) {
+        //   this.authService.anonymousLogin();
+        // }
         this.user = user;
       });
     this.authService.user.pipe(first(() => this.loading = false)).subscribe();
@@ -43,9 +43,11 @@ export class HeaderComponent implements OnInit {
     // });
   }
 
+  signUp() {
+    this.modalService.openModal(MODAL_NAME.signUpForm);
+  }
+
   logout () {
-    this.authService.logout().then(() => {
-      this.fileService.resetFile();
-    });
+    this.authService.logout();
   }
 }

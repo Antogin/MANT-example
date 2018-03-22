@@ -3,7 +3,6 @@ import {Component} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {FileSchema} from './file.schema';
 import {AddFileDTO, FileModel} from './file.models';
-import moment = require('moment');
 
 @Component()
 export class FileService {

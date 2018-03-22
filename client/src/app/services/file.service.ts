@@ -18,8 +18,7 @@ const UNIT_FULL_NAME = {
 @Injectable()
 export class FileService {
 
-  $files: BehaviorSubject<Array<FileModel>> = new BehaviorSubject(null);
-  ref: AngularFirestoreCollection<any>;
+  $files: BehaviorSubject<Array<FileModel>> = new BehaviorSubject([]);
   user: UserModel = null;
 
   constructor (private http: HttpClient, private db: AngularFirestore, private authService: AuthService) {
@@ -29,14 +28,14 @@ export class FileService {
   subscribeToAuthService () {
     this.authService.user.subscribe((user) => {
       this.user = user;
-      if (user) {
+      if (user && !user.anonymous) {
         this.getToFileList();
       }
     });
   }
 
   getToFileList () {
-    const userId = this.user.uid;
+    const userId = this.user._id;
     const headers = new HttpHeaders().append('userId', userId);
 
     this.http.get('http://localhost:3000/file', {headers}).subscribe((data: FileModel[]) => {
@@ -45,7 +44,7 @@ export class FileService {
   }
 
   uploadFile (file: File, name: string, expireValue: number, expireUnit: string) {
-    const userId = this.user ? this.user.uid : null;
+    const userId = this.user ? this.user._id : null;
     let formData: FormData = new FormData();
     const expires = expireValue + expireUnit;
     formData.append('file', file, file.name);
@@ -71,20 +70,10 @@ export class FileService {
           return this.http.post('http://localhost:3000/file/', item).subscribe((data) => {
             console.log('add file', data);
           });
-          // return ref.add(item);
         }
       );
 
     return upload;
-    // return this.http.post(`https://file.io`, formData, {params})
-    //   .map((item: FileModel) => {
-    //     // console.log(item);
-    //     item.userId = userId;
-    //     item.name = name;
-    //     item.used = false;
-    //     item.expires = expiresTimeStamp;
-    //     return ref.add(item);
-    //   });
   }
 
   addFiles (files: FileModel[], user) {
@@ -114,7 +103,6 @@ export class FileService {
 
   filesDeleted (ids: string[]) {
     const files = this.$files.getValue();
-
     const newFiles = files.filter((file) => {
       return ids.every((id) => {
         return id !== file._id;
@@ -134,7 +122,7 @@ export class FileService {
   }
 
   deleteFiles (ids: string[]) {
-    const userId = this.user.uid;
+    const userId = this.user._id;
     const headers = new HttpHeaders().append('userId', userId);
     const options = {
       body: ids,

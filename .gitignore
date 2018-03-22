@@ -6,10 +6,12 @@
 /dist-server
 /tmp
 /out-tsc
+/server/env.ts
 
 # dependencies
 /node_modules
 /server/node_modules
+/server/env.ts
 
 # IDEs and editors
 /.idea

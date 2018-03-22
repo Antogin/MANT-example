@@ -7,8 +7,7 @@ import * as moment from 'moment';
 @Controller('file')
 export class FileController {
 
-  constructor (private fileService: FileService, private ws: WebsocketService) {
-  }
+  constructor (private fileService: FileService, private ws: WebsocketService) {}
 
   @Get()
   getFiles (@Res() res, @Headers() headers) {

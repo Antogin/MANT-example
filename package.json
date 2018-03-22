@@ -24,6 +24,7 @@
     "@angular/router": "^5.2.0",
     "@types/socket.io-client": "^1.4.32",
     "angularfire2": "^5.0.0-rc.6",
+    "bcryptjs": "^2.4.3",
     "bulma": "^0.6.2",
     "core-js": "^2.4.1",
     "firebase": "^4.10.1",

@@ -9,7 +9,7 @@ import { FileFormComponent } from './components/file-form/file-form.component';
 import {ModalService} from './shared/modal/modal.service';
 import {FormsModule} from '@angular/forms';
 import {FileService} from './services/file.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -20,6 +20,8 @@ import {AuthService} from './services/auth.service';
 import { FromNowPipe } from './pipes/from-now.pipe';
 import { SanitizerPipe } from './pipes/sanitizer.pipe';
 import {SocketService} from './services/socket.service';
+import {TokenInterceptor} from './interceptors/token.interceptor';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {SocketService} from './services/socket.service';
     HeaderComponent,
     FromNowPipe,
     SanitizerPipe,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,11 @@ import {SocketService} from './services/socket.service';
     AngularFireModule.initializeApp(environment.fireBaseConfig),
     AngularFirestoreModule
   ],
-  providers: [ModalService, FileService, HttpClientModule, AuthService, SocketService],
+  providers: [ModalService, FileService, HttpClientModule, AuthService, SocketService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

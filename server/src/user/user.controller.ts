@@ -1,4 +1,4 @@
-import {Body, Controller, Post, Res} from '@nestjs/common';
+import {Body, Controller, HttpException, HttpStatus, Post, Res, Response} from '@nestjs/common';
 import {UserDTO} from './user.models';
 import {UserService} from './user.service';
 
@@ -10,8 +10,12 @@ export class UserController {
 
   @Post()
   createUser(@Res() res, @Body() userDTO: UserDTO) {
-    console.log(this.userService);
-    console.log(this);
-    res.json('gg');
+    this.userService.createUser(userDTO).then((user) => {
+      res.json(user);
+    }).catch((e) => {
+      res.status(400);
+      res.json('duplicate');
+    });
+
   }
 }

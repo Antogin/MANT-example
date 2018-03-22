@@ -20,7 +20,9 @@
     </header>
     <section class="modal-card-body">
       <app-file-form *ngIf="modalName === modalNames.fileForm"></app-file-form>
-      <app-login *ngIf="modalName === modalNames.loginForm"></app-login>    </section>
+      <app-login *ngIf="modalName === modalNames.loginForm"></app-login>
+      <app-signup *ngIf="modalName === modalNames.signUpForm"></app-signup>
+    </section>
     <footer class="modal-card-foot">
       <button class="button" (click)="closeModal()">Close</button>
     </footer>

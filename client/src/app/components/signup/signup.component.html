@@ -8,12 +8,18 @@
     </div>
   </div>
   <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input type="text" class="input" placeholder="File title" required
+             [(ngModel)]="user.displayName" name="email">
+    </div>
+  </div>
+  <div class="field">
     <label class="label">Password</label>
     <div class="control">
       <input type="password" class="input" placeholder="File title" required
              [(ngModel)]="user.password" name="password">
     </div>
   </div>
-  <button class="button is-primary" (click)="login(user.email, user.password)">Log in</button>
-  <button class="button is-primary" (click)="login(user.email, user.password)">Log in</button>
+  <button class="button is-primary" (click)="signUp(user.email, user.password, user.displayName)">Log in</button>
 </div>
