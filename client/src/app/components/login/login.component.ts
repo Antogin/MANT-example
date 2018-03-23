@@ -31,7 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   login (email, password) {
-    this.authService.emailLogin(email, password);
+    this.authService.emailLogin(email, password).subscribe(() => {
+      this.modalService.closeModal();
+    });
 
 
     // this.authService.googleLogin().then(() => {

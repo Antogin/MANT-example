@@ -20,6 +20,10 @@ export class AuthController {
   @Post('sign-in')
   signIn(@Res() res, @Body() credentials: CredentialsModel) {
     let userId: string;
+
+    console.log('cred');
+    console.log(credentials);
+
     this.userService.findUser(credentials.email).then(user => {
       console.log(user);
       if (!user) {
@@ -29,7 +33,6 @@ export class AuthController {
       userId = user._id;
       return this.authService.checkPassword(credentials, user);
     }).then((data: { user: UserModel, valid: boolean }) => {
-      console.log(data);
       const {displayName, email, _id} = data.user;
       if (data.valid) {
         const accessToken = sign(
@@ -42,7 +45,6 @@ export class AuthController {
             issuer: 'API League Team'
           }
         );
-        console.log('GA => accessToken', accessToken);
         res.json({accessToken, displayName, email, _id});
       } else {
         res.status(400);

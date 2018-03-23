@@ -40,7 +40,6 @@ export class AuthService {
 
     this.http.post('http://localhost:3000/user', payload)
       .subscribe((data) => {
-        console.log(data);
         this.emailLogin(email, password);
         this.updateUserData(data);
       });
@@ -49,7 +48,6 @@ export class AuthService {
   public anonymousLogin() {
     this.http.get('http://localhost:3000/auth/anonymous')
       .subscribe((data) => {
-        console.log('anon', data);
         this.updateUserData(data);
       });
   }
@@ -62,11 +60,14 @@ export class AuthService {
   public emailLogin(email: string, password: string) {
     const payload = {email, password};
 
-    this.http.post('http://localhost:3000/auth/sign-in', payload)
+    const req = this.http.post('http://localhost:3000/auth/sign-in', payload);
+
+    req
       .subscribe((data) => {
-        console.log(data);
         this.updateUserData(data);
       });
+
+    return req
   }
 
   private oAuthLogin(provider) {
@@ -78,7 +79,6 @@ export class AuthService {
   }
 
   private updateUserData(user, anonymous?) {
-    console.log(user);
     this.user.next(user);
     // sessionStorage.setItem('user', JSON.stringify(user));
     // this.user = ref.valueChanges();
