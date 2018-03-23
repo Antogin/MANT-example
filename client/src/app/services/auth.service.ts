@@ -38,11 +38,13 @@ export class AuthService {
   public signUp(email, displayName, password) {
     const payload = {email, displayName, password, anonymous: false};
 
-    this.http.post('http://localhost:3000/user', payload)
-      .subscribe((data) => {
+    const req = this.http.post('http://localhost:3000/user', payload);
+
+    req.subscribe((data) => {
         this.emailLogin(email, password);
-        this.updateUserData(data);
       });
+
+    return req;
   }
 
   public anonymousLogin() {
@@ -67,7 +69,7 @@ export class AuthService {
         this.updateUserData(data);
       });
 
-    return req
+    return req;
   }
 
   private oAuthLogin(provider) {

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {ModalService} from '../../shared/modal/modal.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,13 +15,15 @@ export class SignupComponent implements OnInit {
     displayName: ''
   };
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private modalService: ModalService) {
   }
 
   ngOnInit() {
   }
 
   signUp(email, displayName, password) {
-    this.authService.signUp(email, displayName, password);
+    this.authService.signUp(email, displayName, password).subscribe(() => {
+      this.modalService.closeModal();
+    });
   }
 }
