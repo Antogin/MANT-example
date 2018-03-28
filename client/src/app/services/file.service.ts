@@ -26,6 +26,10 @@ export class FileService {
   }
 
   subscribeToAuthService () {
+    this.user = this.authService.user.getValue();
+    if (this.user) {
+      this.getToFileList();
+    }
     this.authService.user.subscribe((user) => {
       this.user = user;
       if (user && !user.anonymous) {

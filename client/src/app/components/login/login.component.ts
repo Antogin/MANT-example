@@ -14,28 +14,30 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  errorMessage = null;
 
   constructor (private authService: AuthService, private modalService: ModalService, private fileService: FileService) {
   }
 
-  ngOnInit () {}
+  ngOnInit () {
+  }
 
   authGoogle () {
     let fileToAdd = this.fileService.$files.getValue();
 
     // this.authService.emailLogin();
-      // .then((user) => {
-      //   this.fileService.addFiles(fileToAdd, user);
-      //   this.modalService.closeModal();
-      // });
+    // .then((user) => {
+    //   this.fileService.addFiles(fileToAdd, user);
+    //   this.modalService.closeModal();
+    // });
   }
 
   login (email, password) {
     this.authService.emailLogin(email, password).subscribe(() => {
       this.modalService.closeModal();
+    }, (error) => {
+      this.errorMessage = error.statusText;
     });
-
-
     // this.authService.googleLogin().then(() => {
     //   this.s ubscribeToAuthService();
     // });

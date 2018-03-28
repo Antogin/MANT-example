@@ -14,5 +14,8 @@
              [(ngModel)]="user.password" name="password">
     </div>
   </div>
-  <button class="button is-primary" (click)="login(user.email, user.password)">Log in</button>
+  <div class="notification is-danger" *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
+  <button  [ngClass]="{'is-loading': loading}" class="button is-primary" (click)="login(user.email, user.password)">Log in</button>
 </div>

@@ -14,16 +14,20 @@ export class SignupComponent implements OnInit {
     password: '',
     displayName: ''
   };
+  errorMessage = null;
 
-  constructor(private authService: AuthService, private modalService: ModalService) {
+  constructor (private authService: AuthService, private modalService: ModalService) {
   }
 
-  ngOnInit() {
+  ngOnInit () {
   }
 
-  signUp(email, displayName, password) {
+  signUp (email, displayName, password) {
     this.authService.signUp(email, displayName, password).subscribe(() => {
-      this.modalService.closeModal();
-    });
+        this.modalService.closeModal();
+      },
+      (error) => {
+        this.errorMessage = error.error;
+      });
   }
 }

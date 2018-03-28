@@ -5,17 +5,21 @@ import {UserService} from './user.service';
 @Controller('user')
 export class UserController {
 
-  constructor(private userService: UserService) {
+  constructor (private userService: UserService) {
   }
 
   @Post()
-  createUser(@Res() res, @Body() userDTO: UserDTO) {
-    this.userService.createUser(userDTO).then((user) => {
-      res.json(user);
-    }).catch((e) => {
+  createUser (@Res() res, @Body() userDTO: UserDTO) {
+    if (this.userService.validateUserDto(userDTO)) {
+      this.userService.createUser(userDTO).then((user) => {
+        res.json(user);
+      }).catch((e) => {
+        res.status(400);
+        res.json('duplicate');
+      });
+    } else {
       res.status(400);
-      res.json('duplicate');
-    });
-
+      res.json('Bad request');
+    }
   }
 }

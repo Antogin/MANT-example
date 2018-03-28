@@ -18,16 +18,15 @@ export class AuthService {
   }
 
   public init() {
-    // const user = sessionStorage.getItem('user');
+    const user = sessionStorage.getItem('user');
+    console.log(user);
 
-    // console.log(user);
-
-    // if (user) {
-    //   const parsedUser = JSON.parse(user);
-    //   this.updateUserData(parsedUser);
-    // } else {
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.updateUserData(parsedUser);
+    } else {
       this.anonymousLogin();
-    // }
+    }
   }
 
   public googleLogin() {
@@ -81,8 +80,9 @@ export class AuthService {
   }
 
   private updateUserData(user, anonymous?) {
+    console.log('updateUserData');
     this.user.next(user);
-    // sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
     // this.user = ref.valueChanges();
     // return ref.set(user);
   }

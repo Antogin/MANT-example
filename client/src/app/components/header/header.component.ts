@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   user: any = null;
   $user: Subscription = null;
-  loading = true;
+  loading = false;
 
   constructor (public authService: AuthService, private modalService: ModalService, private fileService: FileService) {
   }
